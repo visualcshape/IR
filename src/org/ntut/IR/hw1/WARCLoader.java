@@ -20,9 +20,9 @@ import java.util.StringTokenizer;
 
 public class WARCLoader {
     private static final String WARC_REGEX_START_STRING = "WARC/([\\d].[\\d][\\d]*)";
+    private final int HTTP_OK_CODE = 200;
     private ProgressHelper progressHelper;
     private long lineCount;
-    private long curLine;
 
     public enum WARCType{
         INFO,
@@ -41,7 +41,6 @@ public class WARCLoader {
         }catch (IOException exception){
             System.out.println("[ERROR-LOAD] An IOException occurred: "+exception.getMessage());
         }
-        this.curLine = 0;
         init();
     }
 
@@ -69,10 +68,10 @@ public class WARCLoader {
                 }
                 if(!isSkip){
                     //Forward to HTML Section
-                    while(!(line = lineNumberReader.readLine()).startsWith("HTTP/")){curLine++;}
+                    while(!(line = lineNumberReader.readLine()).startsWith("HTTP/"));
 
                     int statusCode = getStatusCode(line);
-                    if(statusCode!=200) {
+                    if(statusCode!=HTTP_OK_CODE) {
                         isSkip = true;
                         continue;
                     }
