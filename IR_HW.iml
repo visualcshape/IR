@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="common" level="project" />
+    <orderEntry type="library" name="lucene5.5.0" level="project" />
     <orderEntry type="library" name="tika-app-1.12" level="project" />
   </component>
 </module>

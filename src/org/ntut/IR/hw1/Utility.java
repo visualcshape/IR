@@ -10,7 +10,7 @@ public class Utility {
 
     public static long countFileLine(String fileName) throws IOException{
         LineNumberReader reader = null;
-        System.out.print("Calculating File Size...");
+        System.out.print("Calculating File Size... Should take few second...");
         try {
             reader = new LineNumberReader(new FileReader(fileName));
             while ((reader.readLine()) != null);

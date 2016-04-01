@@ -7,7 +7,7 @@ package org.ntut.IR.hw1;
 public class HW1{
 
     public static void main(String args[]) throws Exception{
-        WARCLoader loader = new WARCLoader("01.warc");
+        WARCLoader loader = new WARCLoader("09.warc");
 
     }
 }

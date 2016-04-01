@@ -9,6 +9,7 @@ import org.apache.tika.parser.html.HtmlParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
+import javax.sound.sampled.Line;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -34,13 +35,13 @@ public class WARCLoader {
         this.documents = new ArrayList<>();
         isNewWARCContent = true;
         this.isShowProgress = true;
-        this.progressHelper = new ProgressHelper();
+        this.progressHelper = new ProgressHelper("Loading to Document Collection...", "Documents Loaded.");
         try {
             this.lineCount = org.ntut.IR.hw1.Utility.countFileLine(warcFileName);
         }catch (IOException exception){
             System.out.println("[ERROR-LOAD] An IOException occurred: "+exception.getMessage());
         }
-        this.curLine = 1;
+        this.curLine = 0;
         init();
     }
 
@@ -55,22 +56,20 @@ public class WARCLoader {
     private void loadFile(){
         boolean isSkip = false;
 
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(this.warcFileName))){
+        try(LineNumberReader lineNumberReader = new LineNumberReader(new FileReader(this.warcFileName))){
             documents = new ArrayList<>();
 
             String line = "";
-            while((line = bufferedReader.readLine()) != null){
-                curLine++;
+            while((line = lineNumberReader.readLine()) != null){
                 if(line.matches(WARC_REGEX_START_STRING)||isNewWARCContent){
                     isNewWARCContent = false;
-                    WARCType warcType = this.getWARCType(bufferedReader.readLine());
-                    curLine++;
+                    WARCType warcType = this.getWARCType(lineNumberReader.readLine());
                     //Skip if warc type is INFO
                     isSkip = !(warcType==WARCType.RESPONSE);
                 }
                 if(!isSkip){
                     //Forward to HTML Section
-                    while(!(line = bufferedReader.readLine()).startsWith("HTTP/")){curLine++;}
+                    while(!(line = lineNumberReader.readLine()).startsWith("HTTP/")){curLine++;}
 
                     int statusCode = getStatusCode(line);
                     if(statusCode!=200) {
@@ -80,8 +79,7 @@ public class WARCLoader {
                     //Forward to <html>
                     while(true){
                         String last = line;
-                        line = bufferedReader.readLine();
-                        curLine++;
+                        line = lineNumberReader.readLine();
                         if(line == null)
                             break;
                         if(line.startsWith("<html")){
@@ -89,20 +87,25 @@ public class WARCLoader {
                         }
                     }
 
-                    if(isShowProgress){
-                        progressHelper.printProgress(curLine, lineCount);
-                    }
+                    showProgress(lineNumberReader.getLineNumber());
 
                     //Extract HTML Content
-                    Document document = this.buildDocument(bufferedReader, line);
+                    Document document = this.buildDocument(lineNumberReader, line);
                     documents.add(document);
 
                 }
             }
+            showProgress(lineNumberReader.getLineNumber());
+            lineNumberReader.close();
         }catch (IOException exception){
             System.out.println("[ERROR-LOAD] An IOException occurred: "+exception.getMessage());
         }
-        System.out.println("\rLoad Complete.");
+    }
+
+    private void showProgress(int curLine) {
+        if(isShowProgress){
+            progressHelper.printProgress(curLine, lineCount);
+        }
     }
 
     private WARCType getWARCType(String line){
@@ -125,13 +128,12 @@ public class WARCLoader {
         return Integer.valueOf(token);
     }
 
-    private InputStream extractHTMLContent(BufferedReader reader, String firstLine){
+    private InputStream extractHTMLContent(LineNumberReader reader, String firstLine){
         StringBuilder stringBuilder = new StringBuilder();
         try {
             stringBuilder.append(firstLine);
             while (true) {
                 String line = reader.readLine();
-                curLine++;
                 if(line==null)
                     break;
                 if(line.matches(WARC_REGEX_START_STRING)){
@@ -147,7 +149,7 @@ public class WARCLoader {
         return new ByteArrayInputStream(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
     }
 
-    private Document buildDocument(BufferedReader reader, String firstLine){
+    private Document buildDocument(LineNumberReader reader, String firstLine){
         final String FIELD_NAME_CONTENT = "content";
 
         Document documentToBeBuilt = new Document();
