@@ -1,11 +1,7 @@
 package org.ntut.IR.hw1;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.sis.internal.jdk7.StandardCharsets;
-import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
@@ -13,11 +9,8 @@ import org.apache.tika.parser.html.HtmlParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
-import javax.print.Doc;
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
@@ -26,7 +19,9 @@ import java.util.StringTokenizer;
 
 public class WARCLoader {
     private static final String WARC_REGEX_START_STRING = "WARC/([\\d].[\\d][\\d]*)";
-    private static final int BUFFER_SIZE = 65535;
+    private ProgressHelper progressHelper;
+    private long lineCount;
+    private long curLine;
 
     public enum WARCType{
         INFO,
@@ -38,6 +33,14 @@ public class WARCLoader {
         this.warcFileName = warcFileName;
         this.documents = new ArrayList<>();
         isNewWARCContent = true;
+        this.isShowProgress = true;
+        this.progressHelper = new ProgressHelper();
+        try {
+            this.lineCount = org.ntut.IR.hw1.Utility.countFileLine(warcFileName);
+        }catch (IOException exception){
+            System.out.println("[ERROR-LOAD] An IOException occurred: "+exception.getMessage());
+        }
+        this.curLine = 1;
         init();
     }
 
@@ -57,15 +60,17 @@ public class WARCLoader {
 
             String line = "";
             while((line = bufferedReader.readLine()) != null){
+                curLine++;
                 if(line.matches(WARC_REGEX_START_STRING)||isNewWARCContent){
                     isNewWARCContent = false;
                     WARCType warcType = this.getWARCType(bufferedReader.readLine());
+                    curLine++;
                     //Skip if warc type is INFO
                     isSkip = !(warcType==WARCType.RESPONSE);
                 }
                 if(!isSkip){
                     //Forward to HTML Section
-                    while(!(line = bufferedReader.readLine()).startsWith("HTTP/"));
+                    while(!(line = bufferedReader.readLine()).startsWith("HTTP/")){curLine++;}
 
                     int statusCode = getStatusCode(line);
                     if(statusCode!=200) {
@@ -76,6 +81,7 @@ public class WARCLoader {
                     while(true){
                         String last = line;
                         line = bufferedReader.readLine();
+                        curLine++;
                         if(line == null)
                             break;
                         if(line.startsWith("<html")){
@@ -83,15 +89,20 @@ public class WARCLoader {
                         }
                     }
 
+                    if(isShowProgress){
+                        progressHelper.printProgress(curLine, lineCount);
+                    }
+
                     //Extract HTML Content
                     Document document = this.buildDocument(bufferedReader, line);
-                    System.out.println("Document built Count:"+documents.size());
                     documents.add(document);
+
                 }
             }
         }catch (IOException exception){
             System.out.println("[ERROR-LOAD] An IOException occurred: "+exception.getMessage());
         }
+        System.out.println("\rLoad Complete.");
     }
 
     private WARCType getWARCType(String line){
@@ -120,6 +131,7 @@ public class WARCLoader {
             stringBuilder.append(firstLine);
             while (true) {
                 String line = reader.readLine();
+                curLine++;
                 if(line==null)
                     break;
                 if(line.matches(WARC_REGEX_START_STRING)){
@@ -161,15 +173,17 @@ public class WARCLoader {
             System.out.println("[ERROR-TIKA] An Exception occurred: "+exception.getMessage());
         }
 
-        System.out.print("Metadata:");
-        System.out.println(Arrays.toString(metadata.names()));
-
         if(metadata.get(PROPERTY_TITLE)!=null)
             document.add(new StringField(PROPERTY_TITLE,metadata.get(PROPERTY_TITLE), Field.Store.NO));
         return handler.toString();
     }
 
+    public void setShowProgress(boolean showProgress){
+        this.isShowProgress = showProgress;
+    }
+
     private String warcFileName;
     private ArrayList<Document> documents;
     private boolean isNewWARCContent;
+    private boolean isShowProgress;
 }

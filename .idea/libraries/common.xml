@@ -1,0 +1,125 @@
+<component name="libraryTable">
+  <library name="common">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/common" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/icu" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/kuromoji" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/morfologik" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/phonetic" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/smartcn" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/stempel" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/uima" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/backward-codecs" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/benchmark" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/classification" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/codecs" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/core" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/demo" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/expressions" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/facet" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/grouping" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/highlighter" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/join" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/memory" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/misc" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/queries" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/queryparser" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/replicator" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/sandbox" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/spatial" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/spatial3d" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/suggest" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/test-framework" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-common" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-icu" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-kuromoji" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-morfologik" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-phonetic" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-smartcn" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-stempel" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-uima" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/backward-codecs" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/benchmark" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/classification" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/codecs" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/core" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/demo" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/expressions" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/facet" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/grouping" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/highlighter" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/join" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/memory" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/misc" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/queries" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/queryparser" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/replicator" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/sandbox" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/spatial" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/spatial3d" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/suggest" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/test-framework" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-common" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-icu" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-kuromoji" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-morfologik" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-phonetic" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-smartcn" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-stempel" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/analyzers-uima" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/backward-codecs" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/benchmark" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/classification" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/codecs" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/core" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/demo" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/expressions" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/facet" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/grouping" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/highlighter" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/join" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/memory" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/misc" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/queries" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/queryparser" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/replicator" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/sandbox" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/spatial" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/spatial3d" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/suggest" />
+      <root url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/docs/test-framework" />
+    </JAVADOC>
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/common" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/icu" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/kuromoji" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/morfologik" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/phonetic" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/smartcn" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/stempel" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/analysis/uima" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/backward-codecs" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/benchmark" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/classification" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/codecs" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/core" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/demo" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/expressions" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/facet" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/grouping" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/highlighter" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/join" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/memory" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/misc" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/queries" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/queryparser" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/replicator" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/sandbox" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/spatial" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/spatial3d" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/suggest" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../IR/lucene-5.5.0/lucene-5.5.0/test-framework" recursive="false" />
+  </library>
+</component>
