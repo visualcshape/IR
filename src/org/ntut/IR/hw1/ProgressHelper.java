@@ -19,6 +19,7 @@ public class ProgressHelper {
     private final int TAB_WIDTH = 4;
     private final int ONE_HUNDRED_PERCENT = 100;
     private final char PERCENTAGE_SYMBOL = '>';
+    private final char PERCENT_SYMBOL = '%';
     private String loadingString;
     private String completeString;
 
@@ -62,13 +63,14 @@ public class ProgressHelper {
         printOut.insert(0,BAR_STYLE[0]);
         printOut.append(BAR_STYLE[1]);
         //
-        printOut.append(percentage+"%");
+        printOut.append(percentage);
+        printOut.append(PERCENT_SYMBOL);
         printOut.insert(0, "\r"+this.loadingString);
 
         System.out.print(printOut);
         if(percentage == 100f) {
             System.out.println();
-            System.out.println(this.completeString);
+            Logger.LOGGER.info(this.completeString);
         }
     }
 }

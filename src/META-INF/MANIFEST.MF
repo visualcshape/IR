@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path: lib/tika-app-1.12.jar lib/lucene-analyzers-common-5.5.0.ja
+ r lib/lucene-core-5.5.0.jar lib/log4j-1.2-api-2.5.jar lib/log4j-api-2
+ .5.jar lib/log4j-core-2.5.jar lib/
+Main-Class: org.ntut.IR.hw1.HW1
+

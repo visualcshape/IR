@@ -33,9 +33,9 @@ public class WARCLoader {
     public WARCLoader(String warcFileName){
         this.warcFileName = warcFileName;
         this.documents = new ArrayList<>();
-        isNewWARCContent = true;
+        this.isNewWARCContent = true;
         this.isShowProgress = true;
-        this.progressHelper = new ProgressHelper("Loading to Document Collection...", "Documents Loaded.");
+        this.progressHelper = new ProgressHelper("Loading Document to Collection...", "Documents Loaded.");
         try {
             this.lineCount = org.ntut.IR.hw1.Utility.countFileLine(warcFileName);
         }catch (IOException exception){
@@ -77,7 +77,6 @@ public class WARCLoader {
                     }
                     //Forward to <html>
                     while(true){
-                        String last = line;
                         line = lineNumberReader.readLine();
                         if(line == null)
                             break;
