@@ -23,6 +23,9 @@ public class Outputer {
     private Map<String, Map<Integer,List<ThreeTuple<Integer, Integer, List<Integer>>>>> termsDocFreqPos = new HashMap<>();
     private boolean isPrepared = false;
     private boolean isShowProgress = true;
+    private final long FREE_MEMORY_LOWER_BOUND_MB = 80;
+    private boolean isFirstWriteDictionary = true;
+    private boolean isFirstWritePostingList = true;
 
     public Outputer(String fieldToOutput, IndexReader indexReader, String outputPath){
         this.fieldNameToOutput = fieldToOutput;
@@ -43,15 +46,27 @@ public class Outputer {
         this.postingListFileName = postingListFileName;
     }
 
-    public void prepareData() throws IOException{
+    public void prepareData() throws IOException, NotPreparedException{
         Fields fields = MultiFields.getFields(this.indexReader);
         Terms contentTerms = fields.terms(this.fieldNameToOutput);
         TermsEnum termsEnum = contentTerms.iterator();
         BytesRef aTerm;
         ProgressHelper helper = new ProgressHelper("Preparing Progress", "Data Preparation Complete");
         long termProgress = 0;
+        this.isPrepared = true;
+
         Logger.LOGGER.info("Preparing Data...");
         while((aTerm = termsEnum.next())!=null){
+            boolean isFreeMemoryAvailable = this.checkMemory();
+
+            if(!isFreeMemoryAvailable){
+                //flush to file.
+                Logger.LOGGER.warn("Memory is about to exceed. Dumping things to file...");
+                this.outputPostingListAndDictionary();
+                //Clean up.
+                termsDocFreqPos.clear();
+            }
+
             String termString = aTerm.utf8ToString();
             PostingsEnum termsPosition = MultiFields.getTermPositionsEnum(this.indexReader, this.fieldNameToOutput, aTerm);
 
@@ -78,16 +93,15 @@ public class Outputer {
             }
 
         }
-
-        this.isPrepared = true;
         //Logger.LOGGER.info("Data Preparation Completed.");
     }
 
     public void outputDictionary() throws IOException,NotPreparedException{
         checkPrepared();
-        try(FileWriter dictionaryWriter = new FileWriter(new File(outputPath + "/" + this.dictionaryName), false);
+        try(FileWriter dictionaryWriter = new FileWriter(new File(outputPath + "/" + this.dictionaryName), !this.isFirstWriteDictionary);
             BufferedWriter bufferedWriter = new BufferedWriter(dictionaryWriter)
         ) {
+            this.isFirstWriteDictionary = false;
             Logger.LOGGER.info("Writing Dictionary...");
             for (Map.Entry entry : this.termsDocFreqPos.entrySet()) {
                 bufferedWriter.write(entry.getKey().toString());
@@ -100,9 +114,10 @@ public class Outputer {
 
     public void outputPostingList() throws IOException, NotPreparedException{
         checkPrepared();
-        try(FileWriter dictionaryWriter = new FileWriter(new File(outputPath + "/" + this.postingListFileName), false);
+        try(FileWriter dictionaryWriter = new FileWriter(new File(outputPath + "/" + this.postingListFileName), !this.isFirstWritePostingList);
             BufferedWriter bufferedWriter = new BufferedWriter(dictionaryWriter)
         ) {
+            this.isFirstWritePostingList = false;
             Logger.LOGGER.info("Writing Invert Index File...");
             for (Map.Entry<String,Map<Integer,List<ThreeTuple<Integer, Integer, List<Integer>>>>> entry : this.termsDocFreqPos.entrySet()) {
                 StringBuilder aTermInvertIndexOutputStringBuilder = new StringBuilder();
@@ -147,6 +162,14 @@ public class Outputer {
         outputDictionary();
         outputPostingList();
         Logger.LOGGER.info("Writing File Finished.");
+    }
+
+    private boolean checkMemory(){
+        final long MB = 1024*1024;
+        Runtime runtime = Runtime.getRuntime();
+        long freeMemoryMB = runtime.freeMemory()/MB;
+
+        return freeMemoryMB > FREE_MEMORY_LOWER_BOUND_MB;
     }
 
     private void checkPrepared() throws NotPreparedException{

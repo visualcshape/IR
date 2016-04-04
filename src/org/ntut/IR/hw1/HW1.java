@@ -59,6 +59,8 @@ public class HW1{
 
         WARCLoader loader = new WARCLoader(warcFileName);
         IndexUtility.startWriteIndex(indexDirPath, loader.getDocuments());
+        //Free the memory.
+        loader.getDocuments().clear();
         IndexReader indexReader = IndexUtility.getIndexReader(indexDirPath);
         Outputer outputer = new Outputer(FIELD_NAME, indexReader, outputFilePath);
         if(outputDictionaryName!=null)
