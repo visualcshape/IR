@@ -2,15 +2,14 @@
   <artifact name="IRHW">
     <output-path>$PROJECT_DIR$/out/artifacts/IRHW</output-path>
     <root id="root">
-      <element id="archive" name="IR_HW1.jar">
+      <element id="archive" name="IRHW.jar">
         <element id="module-output" name="IR_HW1" />
         <element id="file-copy" path="$PROJECT_DIR$/src/log4j2.xml" />
       </element>
-      <element id="directory" name="lib">
+      <element id="directory" name="libs">
         <element id="library" level="project" name="log4j-1.2-api-2.5-javadoc" />
         <element id="library" level="project" name="lucene5.5.0" />
         <element id="library" level="project" name="tika-app-1.12" />
-        <element id="file-copy" path="$PROJECT_DIR$/src/log4j2.xml" />
       </element>
     </root>
   </artifact>

@@ -35,7 +35,7 @@ public class WARCLoader {
         this.documents = new ArrayList<>();
         this.isNewWARCContent = true;
         this.isShowProgress = true;
-        this.progressHelper = new ProgressHelper("Loading Document to Collection...", "Documents Loaded.");
+        this.progressHelper = new ProgressHelper("Loading Documents to Collection...", "Documents Loaded.");
         try {
             this.lineCount = org.ntut.IR.hw1.Utility.countFileLine(warcFileName);
         }catch (IOException exception){

@@ -13,13 +13,13 @@ public class HW1{
 
     public static void main(String args[]) throws Exception{
         final String usage = "Usage:\njava -jar IRHW.jar -warc WARCFileName " +
-                "[-idp index directory output path] " +
-                "[-ofp output file path] " +
-                "[-odfn output dictionary file name] " +
-                "[-oplfn output posting list file name]\n" +
+                "[-idp indexDirectoryPath] " +
+                "[-ofp outputFilePath] " +
+                "[-odfn outputDictionaryFileName] " +
+                "[-oplfn outputPostingListFileName]\n" +
                 "The args surrounded with [] sign is optional.\n" +
                 "Default index files, which are generate by Lucene, are placed in the \"index\" folder.\n" +
-                "Default out put file path is as same as jar file's path.\n" +
+                "Default output path is as same as where jar file located.\n" +
                 "Default dictionary file name is \"Dictionary.txt\".\n" +
                 "Default posting list file name is \"PostingList.txt\".\n";
         String warcFileName = null;

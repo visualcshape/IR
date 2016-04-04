@@ -10,7 +10,7 @@ public class Utility {
 
     public static long countFileLine(String fileName) throws IOException{
         LineNumberReader reader = null;
-        Logger.LOGGER.info("Calculating File Size... Shall take few second...");
+        Logger.LOGGER.info("Calculating File Size... Shall take a few seconds...");
         try {
             reader = new LineNumberReader(new FileReader(fileName));
             while ((reader.readLine()) != null);
