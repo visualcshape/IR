@@ -2,6 +2,8 @@ package org.ntut.IR.hw1;
 
 import org.apache.lucene.index.IndexReader;
 
+import java.util.Scanner;
+
 /**
  * Created by Vodalok on 2016/3/25.
  */
@@ -27,6 +29,7 @@ public class HW1{
         String outputFilePath = null;
         String outputDictionaryName = null;
         String outputPostingListName = null;
+        /*
         try {
             for (int i = 0; i < args.length; i++) {
                 if ("-idp".equals(args[i])) {
@@ -69,5 +72,13 @@ public class HW1{
             outputer.setPostingListFileName(outputPostingListName);
         outputer.prepareData();
         outputer.outputPostingListAndDictionary();
+*/
+        /*Gui gui = new Gui();
+        gui.run();*/
+        QueryTFIDF qt  = new QueryTFIDF();
+        System.out.print("Enter the Query :");
+        Scanner scanner = new Scanner(System.in);
+        qt.SetInput(scanner.nextLine());
+        qt.SearchFiles();
     }
 }

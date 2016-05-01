@@ -1,6 +1,7 @@
 package org.ntut.IR.hw1;
 
 import org.apache.lucene.document.*;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.sis.internal.jdk7.StandardCharsets;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -23,6 +24,8 @@ public class WARCLoader {
     private final int HTTP_OK_CODE = 200;
     private ProgressHelper progressHelper;
     private long lineCount;
+    FieldType fieldType;
+
 
     public enum WARCType{
         INFO,
@@ -41,7 +44,14 @@ public class WARCLoader {
         }catch (IOException exception){
             System.out.println("[ERROR-LOAD] An IOException occurred: "+exception.getMessage());
         }
+        fieldType = new FieldType();
+        fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
+        fieldType.setStoreTermVectorPositions(true);
+        fieldType.setStored(true);
+        fieldType.setStoreTermVectors(true);
+        fieldType.setTokenized(true);
         init();
+
     }
 
     public ArrayList<Document> getDocuments(){
@@ -153,8 +163,7 @@ public class WARCLoader {
         Document documentToBeBuilt = new Document();
         InputStream inputStream = extractHTMLContent(reader, firstLine);
         String body = this.parseHTML(inputStream, documentToBeBuilt);
-
-        documentToBeBuilt.add(new TextField(FIELD_NAME_CONTENT, body, Field.Store.NO));
+        documentToBeBuilt.add(new Field(FIELD_NAME_CONTENT, body, fieldType));
 
         return documentToBeBuilt;
     }
@@ -174,7 +183,7 @@ public class WARCLoader {
         }
 
         if(metadata.get(PROPERTY_TITLE)!=null)
-            document.add(new StringField(PROPERTY_TITLE,metadata.get(PROPERTY_TITLE), Field.Store.NO));
+            document.add(new Field(PROPERTY_TITLE,metadata.get(PROPERTY_TITLE),fieldType));
         return handler.toString();
     }
 
