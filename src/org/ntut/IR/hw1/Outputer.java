@@ -144,7 +144,7 @@ public class Outputer {
                             aTermInvertIndexOutputStringBuilder.append(", ");
                         }
                         //Backward 2 character(Eliminate ", ")
-                        aTermInvertIndexOutputStringBuilder.delete(aTermInvertIndexOutputStringBuilder.length()-3,aTermInvertIndexOutputStringBuilder.length()-1);
+                        aTermInvertIndexOutputStringBuilder.setLength(aTermInvertIndexOutputStringBuilder.length()-2);
                         aTermInvertIndexOutputStringBuilder.append(">;\n");
                     }
                     //Backward 1 character to eliminate newline.

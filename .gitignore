@@ -6,3 +6,5 @@ indexed/
 .idea/libraries/
 out/
 *.sample
+Dictionary.txt
+PostingList.txt

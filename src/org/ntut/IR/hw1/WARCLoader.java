@@ -80,7 +80,7 @@ public class WARCLoader {
                         line = lineNumberReader.readLine();
                         if(line == null)
                             break;
-                        if(line.startsWith("<html")){
+                        if(line.startsWith("<")){
                             break;
                         }
                     }
@@ -165,6 +165,7 @@ public class WARCLoader {
         Metadata metadata = new Metadata();
         ParseContext context = new ParseContext();
         BodyContentHandler handler = new BodyContentHandler();
+        
         HtmlParser parser = new HtmlParser();
 
         try {
