@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/IRHW</output-path>
     <root id="root">
       <element id="archive" name="IRHW.jar">
-        <element id="module-output" name="IR_HW1" />
+        <element id="module-output" name="IR" />
         <element id="file-copy" path="$PROJECT_DIR$/src/log4j2.xml" />
       </element>
       <element id="directory" name="libs">

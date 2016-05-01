@@ -1,5 +1,10 @@
 package org.ntut.IR.hw1;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.apache.lucene.index.IndexReader;
 
 import java.util.Scanner;
@@ -8,10 +13,20 @@ import java.util.Scanner;
  * Created by Vodalok on 2016/3/25.
  */
 
-public class HW1{
+public class Main extends Application{
     private static final String DEFAULT_INDEX_PATH = "./index";
     private static final String DEFAULT_OUTPUT_FILE_PATH = ".";
     private static final String FIELD_NAME = "content";
+    private final String FXML_NAME = "GUI.fxml";
+    private final String TITLE = "IR";
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource(FXML_NAME));
+        primaryStage.setTitle(TITLE);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
 
     public static void main(String args[]) throws Exception{
         final String usage = "Usage:\njava -jar IRHW.jar -warc WARCFileName " +
@@ -29,6 +44,7 @@ public class HW1{
         String outputFilePath = null;
         String outputDictionaryName = null;
         String outputPostingListName = null;
+        launch(args);
         /*
         try {
             for (int i = 0; i < args.length; i++) {
@@ -74,11 +90,12 @@ public class HW1{
         outputer.outputPostingListAndDictionary();
 */
         /*Gui gui = new Gui();
-        gui.run();*/
+        gui.run();
         QueryTFIDF qt  = new QueryTFIDF();
         System.out.print("Enter the Query :");
         Scanner scanner = new Scanner(System.in);
         qt.SetInput(scanner.nextLine());
         qt.SearchFiles();
+        */
     }
 }
