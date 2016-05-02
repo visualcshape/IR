@@ -6,13 +6,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ntut.IR.hw1.GUIController">
    <children>
       <MenuBar>
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Exit" />
+                  <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExitMenuItemAction" text="Exit" />
                </items>
             </Menu>
          </menus>
@@ -34,26 +34,26 @@
                     </rowConstraints>
                      <children>
                         <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="WARC Location" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" />
-                        <TextField GridPane.columnIndex="1" />
-                        <Button mnemonicParsing="false" text="Browse..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <TextField fx:id="warcPathTextField" editable="false" GridPane.columnIndex="1" />
+                        <Button fx:id="browseWARCButton" mnemonicParsing="false" onAction="#handleBrowseWARCFile" text="Browse..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <TitledPane animated="false" text="Output Options" GridPane.columnSpan="3" GridPane.rowIndex="1">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <Label layoutX="14.0" layoutY="14.0" text="Dictionary File Name:" AnchorPane.leftAnchor="8.0" />
-                                    <TextField layoutX="161.0" layoutY="9.0" prefHeight="27.0" prefWidth="355.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="5.0" />
+                                    <TextField fx:id="dictionaryFileNameTextField" layoutX="161.0" layoutY="9.0" prefHeight="27.0" prefWidth="355.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="5.0" />
                                     <Label layoutX="14.0" layoutY="52.0" text="Posting List File Name:" AnchorPane.leftAnchor="8.0" />
-                                    <TextField layoutX="161.0" layoutY="47.0" prefHeight="27.0" prefWidth="354.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="40.0" />
+                                    <TextField fx:id="postingListFileNameTextField" layoutX="161.0" layoutY="47.0" prefHeight="27.0" prefWidth="354.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="40.0" />
                                     <Label layoutX="524.0" layoutY="14.0" text=".txt" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                                     <Label layoutX="524.0" layoutY="52.0" text=".txt" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
                                     <Label layoutX="18.0" layoutY="90.0" text="Output Path:" AnchorPane.leftAnchor="8.0" />
-                                    <TextField layoutX="160.0" layoutY="90.0" prefHeight="27.0" prefWidth="370.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="75.0" />
-                                    <Button layoutX="524.0" layoutY="81.0" mnemonicParsing="false" text="Browse..." AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="75.0" />
+                                    <TextField fx:id="outputPathTextField" editable="false" layoutX="160.0" layoutY="90.0" prefHeight="27.0" prefWidth="370.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="75.0" />
+                                    <Button fx:id="browseOutputPathButton" layoutX="524.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleBrowseOutputPathAction" text="Browse..." AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="75.0" />
                                  </children>
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <Button mnemonicParsing="false" text="Start Index" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="startIndexButton" mnemonicParsing="false" text="Start Index" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </content>
@@ -77,14 +77,14 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="71.0" prefWidth="628.0" SplitPane.resizableWithParent="false">
                                  <children>
                                     <Label layoutX="14.0" layoutY="23.0" text="Index Path" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="23.0" />
-                                    <TextField layoutX="88.0" layoutY="18.0" prefHeight="27.0" prefWidth="437.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="14.0" />
-                                    <Button layoutX="555.0" layoutY="18.0" mnemonicParsing="false" text="Browse..." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
+                                    <TextField fx:id="indexPathTextField" editable="false" layoutX="88.0" layoutY="18.0" prefHeight="27.0" prefWidth="437.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="14.0" />
+                                    <Button fx:id="broweIndexPathButton" layoutX="555.0" layoutY="18.0" mnemonicParsing="false" text="Browse..." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TextField layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="511.0" promptText="Input Query Here..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="103.0" />
-                                    <Button defaultButton="true" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Query" AnchorPane.rightAnchor="16.0" />
+                                    <TextField fx:id="queryTextField" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="511.0" promptText="Input Query Here..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="103.0" />
+                                    <Button fx:id="queryButton" defaultButton="true" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Query" AnchorPane.rightAnchor="16.0" />
                                     <Label layoutX="14.0" layoutY="52.0" text="Document Results" AnchorPane.leftAnchor="14.0" />
                                     <GridPane layoutX="14.0" layoutY="70.0" prefHeight="181.0" prefWidth="604.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
                                       <columnConstraints>
@@ -94,7 +94,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <TableView prefHeight="178.0" prefWidth="600.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                                          <TableView fx:id="queryResultTableView" prefHeight="178.0" prefWidth="600.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                                              <columns>
                                                 <TableColumn editable="false" prefWidth="190.0" text="Doc#" />
                                                 <TableColumn editable="false" minWidth="-Infinity" prefWidth="412.0" text="Score" />

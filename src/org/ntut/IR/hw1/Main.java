@@ -22,10 +22,13 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource(FXML_NAME));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_NAME));
+        Parent root = loader.load();
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        GUIController controller = (GUIController)loader.getController();
+        controller.setStage(primaryStage);
     }
 
     public static void main(String args[]) throws Exception{
@@ -44,8 +47,8 @@ public class Main extends Application{
         String outputFilePath = null;
         String outputDictionaryName = null;
         String outputPostingListName = null;
-        //launch(args);
-
+        launch(args);
+        /*
         try {
             for (int i = 0; i < args.length; i++) {
                 if ("-idp".equals(args[i])) {
@@ -88,7 +91,7 @@ public class Main extends Application{
             outputer.setPostingListFileName(outputPostingListName);
         outputer.prepareData();
         outputer.outputPostingListAndDictionary();
-
+*/
         /*Gui gui = new Gui();
         gui.run();
         QueryTFIDF qt  = new QueryTFIDF();
