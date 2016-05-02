@@ -36,6 +36,8 @@ public class GUIController implements Initializable {
     private Button browseOutputPathButton;
     @FXML
     private Button startIndexButton;
+    @FXML
+    private CheckBox outputDictionaryAndPostingListCheckBox;
     //Query
     @FXML
     private TextField indexPathTextField;
@@ -60,6 +62,21 @@ public class GUIController implements Initializable {
     private String postingListFileName = "PostingList";
     private String warcFilePath = "";
     private String outputPath = "";
+    private boolean isOutputDictionaryAndPostingList = true;
+    private boolean isDictionaryTextFieldDisabled = false;
+    private boolean isPostingListTextFieldDisabled = false;
+
+    public void setPostingListTextFieldDisabled(boolean postingListTextFieldDisabled) {
+        isPostingListTextFieldDisabled = postingListTextFieldDisabled;
+        this.postingListFileNameTextField.setDisable(this.isPostingListTextFieldDisabled);
+        this.checkStartIndexPrepared();
+    }
+
+    public void setDictionaryTextFieldDisabled(boolean dictionaryTextFieldDisabled) {
+        isDictionaryTextFieldDisabled = dictionaryTextFieldDisabled;
+        this.dictionaryFileNameTextField.setDisable(this.isDictionaryTextFieldDisabled);
+        this.checkStartIndexPrepared();
+    }
 
     public void setInitialDirectory(String initialDirectory) {
         StringBuilder builder = new StringBuilder(initialDirectory);
@@ -109,14 +126,25 @@ public class GUIController implements Initializable {
         this.checkStartIndexPrepared();
     }
 
+    public void setOutputDictionaryAndPostingListCheckBoxEnabled(boolean checkBoxEnabled){
+        this.isOutputDictionaryAndPostingList = checkBoxEnabled;
+        this.outputDictionaryAndPostingListCheckBox.setSelected(this.isOutputDictionaryAndPostingList);
+        this.setPostingListTextFieldDisabled(!this.isOutputDictionaryAndPostingList);
+        this.setDictionaryTextFieldDisabled(!this.isOutputDictionaryAndPostingList);
+        this.checkStartIndexPrepared();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startIndexButton.setDisable(isStartIndexButtonDisabled);
         queryButton.setDisable(isQueryButtonDisabled);
         dictionaryFileNameTextField.setText(dictionaryFileName);
+        dictionaryFileNameTextField.setDisable(isDictionaryTextFieldDisabled);
         postingListFileNameTextField.setText(postingListFileName);
+        postingListFileNameTextField.setDisable(isPostingListTextFieldDisabled);
         warcPathTextField.setText(warcFilePath);
         outputPathTextField.setText(this.outputPath);
+        outputDictionaryAndPostingListCheckBox.setSelected(this.isOutputDictionaryAndPostingList);
         dictionaryFileNameTextField.textProperty().addListener(this.dictionaryTextFieldChangedListener);
         postingListFileNameTextField.textProperty().addListener(this.postingListTextFieldChangedListener);
         this.checkStartIndexPrepared();
@@ -179,6 +207,11 @@ public class GUIController implements Initializable {
         Platform.exit();
     }
 
+    @FXML
+    private void handleOutputPostingAndDictionaryCheckboxAction(ActionEvent event){
+        this.setOutputDictionaryAndPostingListCheckBoxEnabled(this.outputDictionaryAndPostingListCheckBox.isSelected());
+    }
+
     private ChangeListener dictionaryTextFieldChangedListener = new ChangeListener() {
         @Override
         public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -194,9 +227,18 @@ public class GUIController implements Initializable {
     };
 
     private void checkStartIndexPrepared(){
-         this.setStartIndexButtonDisabled(!(!this.warcFilePath.isEmpty() &
-                !this.dictionaryFileName.isEmpty() &
-                !this.postingListFileName.isEmpty() &
-                !this.outputPath.isEmpty()));
+        if(this.isOutputDictionaryAndPostingList)
+            this.setStartIndexButtonDisabled(!(!this.warcFilePath.isEmpty() &
+                    !this.dictionaryFileName.isEmpty() &
+                    !this.postingListFileName.isEmpty() &
+                    !this.outputPath.isEmpty()));
+        else
+            this.setStartIndexButtonDisabled(!(!this.warcFilePath.isEmpty()&
+            !this.outputPath.isEmpty()));
+    }
+
+    @FXML
+    private void handleStartIndexButtonAction(ActionEvent event){
+
     }
 }

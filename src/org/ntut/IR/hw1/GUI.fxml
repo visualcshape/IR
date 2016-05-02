@@ -53,7 +53,12 @@
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <Button fx:id="startIndexButton" mnemonicParsing="false" text="Start Index" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="startIndexButton" mnemonicParsing="false" text="Start Index" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="outputDictionaryAndPostingListCheckBox" mnemonicParsing="false" onAction="#handleOutputPostingAndDictionaryCheckboxAction" text="Ｏutput Dictionary and Posting List Files" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin>
+                        </CheckBox>
                      </children>
                   </GridPane>
                </content>
