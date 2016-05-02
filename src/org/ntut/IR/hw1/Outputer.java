@@ -61,6 +61,7 @@ public class Outputer {
 
             if(!isFreeMemoryAvailable){
                 //flush to file.
+                System.out.println();
                 Logger.LOGGER.warn("Memory is about to exceed. Dumping things to file...");
                 this.outputPostingListAndDictionary();
                 //Clean up.

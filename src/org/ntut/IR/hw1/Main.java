@@ -44,8 +44,8 @@ public class Main extends Application{
         String outputFilePath = null;
         String outputDictionaryName = null;
         String outputPostingListName = null;
-        launch(args);
-        /*
+        //launch(args);
+
         try {
             for (int i = 0; i < args.length; i++) {
                 if ("-idp".equals(args[i])) {
@@ -88,7 +88,7 @@ public class Main extends Application{
             outputer.setPostingListFileName(outputPostingListName);
         outputer.prepareData();
         outputer.outputPostingListAndDictionary();
-*/
+
         /*Gui gui = new Gui();
         gui.run();
         QueryTFIDF qt  = new QueryTFIDF();

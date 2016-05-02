@@ -2,6 +2,8 @@ package org.ntut.IR.hw1;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.standard.ClassicAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.*;
 import org.apache.lucene.store.Directory;
@@ -34,7 +36,7 @@ public class IndexUtility {
         Directory directory = FSDirectory.open(Paths.get(dirPath));
         FileUtils.cleanDirectory(new File(dirPath));
 
-        Analyzer analyzer = new StandardAnalyzer();
+        Analyzer analyzer = new SimpleAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
         config.setRAMBufferSizeMB(RAM_LIMIT);

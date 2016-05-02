@@ -25,6 +25,9 @@ public class WARCLoader {
     private ProgressHelper progressHelper;
     private long lineCount;
     FieldType fieldType;
+    private final String CRAM_CODE = "</body></html>";
+    private boolean isOverContentLength = false;
+    private final int MAX_LENGTH = 65536;
 
 
     public enum WARCType{
@@ -72,6 +75,7 @@ public class WARCLoader {
             while((line = lineNumberReader.readLine()) != null){
                 if(line.matches(WARC_REGEX_START_STRING)||isNewWARCContent){
                     isNewWARCContent = false;
+                    isOverContentLength = false;
                     WARCType warcType = this.getWARCType(lineNumberReader.readLine());
                     //Skip if warc type is INFO
                     isSkip = !(warcType==WARCType.RESPONSE);
@@ -85,6 +89,16 @@ public class WARCLoader {
                         isSkip = true;
                         continue;
                     }
+
+                    while(!(line = lineNumberReader.readLine()).startsWith("Content-Length"));
+                    int httpContentLength = this.getHTTPContentLength(line);
+
+                    if(httpContentLength==-1)
+                        Logger.LOGGER.error("Http content length error.");
+
+                    if(httpContentLength >= MAX_LENGTH)
+                        isOverContentLength = true;
+
                     //Forward to <html>
                     while(true){
                         line = lineNumberReader.readLine();
@@ -131,8 +145,8 @@ public class WARCLoader {
         StringTokenizer tokenizer = new StringTokenizer(line,"/");
         if(!tokenizer.nextToken().startsWith("HTTP"))
             return -1;
-        String token = tokenizer.nextToken(" ");
-        token = tokenizer.nextToken();
+        tokenizer.nextToken(" ");
+        String token = tokenizer.nextToken();
         return Integer.valueOf(token);
     }
 
@@ -146,6 +160,8 @@ public class WARCLoader {
                     break;
                 if(line.matches(WARC_REGEX_START_STRING)){
                     isNewWARCContent = true;
+                    if(this.isOverContentLength)
+                        stringBuilder.append(CRAM_CODE);
                     break;
                 }
                 stringBuilder.append(line);
@@ -186,6 +202,16 @@ public class WARCLoader {
         if(metadata.get(PROPERTY_TITLE)!=null)
             document.add(new Field(PROPERTY_TITLE,metadata.get(PROPERTY_TITLE),fieldType));
         return handler.toString();
+    }
+
+    private int getHTTPContentLength(String line){
+        StringTokenizer tokenizer = new StringTokenizer(line, ": ");
+        if(tokenizer.countTokens() < 2)
+            return  -1;
+
+        tokenizer.nextToken();
+
+        return Integer.parseInt(tokenizer.nextToken());
     }
 
     public void setShowProgress(boolean showProgress){
