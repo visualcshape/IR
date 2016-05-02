@@ -63,7 +63,6 @@ public class IndexUtility {
 
     public static IndexReader getIndexReader(String dirPath) throws IOException{
         IndexReader indexReader = DirectoryReader.open(FSDirectory.open(Paths.get(dirPath)));
-
         return indexReader;
     }
 }

@@ -83,13 +83,13 @@
                                  <children>
                                     <Label layoutX="14.0" layoutY="23.0" text="Index Path" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="23.0" />
                                     <TextField fx:id="indexPathTextField" editable="false" layoutX="88.0" layoutY="18.0" prefHeight="27.0" prefWidth="437.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="14.0" />
-                                    <Button fx:id="broweIndexPathButton" layoutX="555.0" layoutY="18.0" mnemonicParsing="false" text="Browse..." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
+                                    <Button fx:id="browseIndexPathButton" layoutX="555.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleBrowseIndexPathAction" text="Browse..." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
                                     <TextField fx:id="queryTextField" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="511.0" promptText="Input Query Here..." AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="103.0" />
-                                    <Button fx:id="queryButton" defaultButton="true" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Query" AnchorPane.rightAnchor="16.0" />
+                                    <Button fx:id="queryButton" defaultButton="true" layoutX="537.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleQueryButtonAction" prefHeight="27.0" prefWidth="75.0" text="Query" AnchorPane.rightAnchor="16.0" />
                                     <Label layoutX="14.0" layoutY="52.0" text="Document Results" AnchorPane.leftAnchor="14.0" />
                                     <GridPane layoutX="14.0" layoutY="70.0" prefHeight="181.0" prefWidth="604.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
                                       <columnConstraints>
@@ -100,10 +100,6 @@
                                       </rowConstraints>
                                        <children>
                                           <TableView fx:id="queryResultTableView" prefHeight="178.0" prefWidth="600.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-                                             <columns>
-                                                <TableColumn editable="false" prefWidth="190.0" text="Doc#" />
-                                                <TableColumn editable="false" minWidth="-Infinity" prefWidth="412.0" text="Score" />
-                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>

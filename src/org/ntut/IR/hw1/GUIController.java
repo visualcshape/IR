@@ -3,6 +3,7 @@ package org.ntut.IR.hw1;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 import java.io.File;
@@ -43,7 +45,7 @@ public class GUIController implements Initializable {
     @FXML
     private TextField indexPathTextField;
     @FXML
-    private Button broweIndexPathButton;
+    private Button browseIndexPathButton;
     @FXML
     private TextField queryTextField;
     @FXML
@@ -61,6 +63,20 @@ public class GUIController implements Initializable {
     private boolean isQueryButtonDisabled = true;
     private String dictionaryFileName = "Dictionary";
     private String postingListFileName = "PostingList";
+    private String warcFilePath = "";
+    private String outputPath = "";
+    private boolean isOutputDictionaryAndPostingList = true;
+    private boolean isDictionaryTextFieldDisabled = false;
+    private boolean isPostingListTextFieldDisabled = false;
+    private final String INDEX_PROCESS_GUI_FXML_NAME = "IndexProcessing.fxml";
+    private String queryIndexPath = "";
+    private String queryString = "";
+
+    public void setQueryIndexPath(String queryIndexPath) {
+        this.queryIndexPath = queryIndexPath;
+        this.indexPathTextField.setText(this.queryIndexPath);
+        checkQueryPrepared();
+    }
 
     public String getDictionaryFileName() {
         return dictionaryFileName;
@@ -81,12 +97,6 @@ public class GUIController implements Initializable {
     public boolean isOutputDictionaryAndPostingList() {
         return isOutputDictionaryAndPostingList;
     }
-
-    private String warcFilePath = "";
-    private String outputPath = "";
-    private boolean isOutputDictionaryAndPostingList = true;
-    private boolean isDictionaryTextFieldDisabled = false;
-    private boolean isPostingListTextFieldDisabled = false;
 
     public void setPostingListTextFieldDisabled(boolean postingListTextFieldDisabled) {
         isPostingListTextFieldDisabled = postingListTextFieldDisabled;
@@ -121,7 +131,6 @@ public class GUIController implements Initializable {
     public void setQueryButtonDisabled(boolean queryButtonDisabled) {
         isQueryButtonDisabled = queryButtonDisabled;
         this.queryButton.setDisable(isQueryButtonDisabled);
-        this.checkStartIndexPrepared();
     }
 
     public void setDictionaryFileName(String dictionaryFileName) {
@@ -169,6 +178,7 @@ public class GUIController implements Initializable {
         outputDictionaryAndPostingListCheckBox.setSelected(this.isOutputDictionaryAndPostingList);
         dictionaryFileNameTextField.textProperty().addListener(this.dictionaryTextFieldChangedListener);
         postingListFileNameTextField.textProperty().addListener(this.postingListTextFieldChangedListener);
+        queryTextField.textProperty().addListener(this.queryTextChangedListener);
         this.checkStartIndexPrepared();
     }
 
@@ -194,23 +204,24 @@ public class GUIController implements Initializable {
     }
 
     private boolean checkFile(File selectedFile) {
-        if(selectedFile!=null) {
+        if(selectedFile != null) {
             try {
                 this.setInitialDirectory(selectedFile.getCanonicalPath());
             }catch (IOException exception){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("An Exception Occured!");
-                alert.setContentText(exception.getStackTrace().toString());
+                showErrorAlert("Error", "An Exception Occured!", exception.getStackTrace().toString());
             }
             return true;
         }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("No file was opened");
-            alert.setHeaderText("No file was opened.");
-            alert.setContentText("Please choose another file.");
+            showErrorAlert("Error", "No file was opened.", "Please choose another file.");
         }
         return false;
+    }
+
+    private void showErrorAlert(String error2, String headerText, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(error2);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
     }
 
     @FXML
@@ -259,7 +270,6 @@ public class GUIController implements Initializable {
             !this.outputPath.isEmpty()));
     }
 
-    private final String INDEX_PROCESS_GUI_FXML_NAME = "IndexProcessing.fxml";
     @FXML
     private void handleStartIndexButtonAction(ActionEvent event){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(INDEX_PROCESS_GUI_FXML_NAME));
@@ -285,9 +295,49 @@ public class GUIController implements Initializable {
                 }
             };
             new Thread(task).start();
-            //controller.start();
         }catch (IOException exception){
+            showErrorAlert("Error", "An Exception Occured!", exception.getStackTrace().toString());
+        }
+    }
 
+    private void checkQueryPrepared(){
+        this.setQueryButtonDisabled(!(!this.queryIndexPath.isEmpty()));
+    }
+
+    private ChangeListener queryTextChangedListener = new ChangeListener() {
+        @Override
+        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+            queryString = queryTextField.getText();
+        }
+    };
+
+    @FXML
+    private void handleBrowseIndexPathAction(ActionEvent event){
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setInitialDirectory(new File(this.initialDirectory));
+        chooser.setTitle("Select Output Path");
+        File outputPath = chooser.showDialog(controlStage);
+        if(checkFile(outputPath))
+            this.setQueryIndexPath(outputPath.getAbsolutePath());
+    }
+
+    @FXML
+    private void handleQueryButtonAction(ActionEvent event){
+        QueryTFIDF queryTFIDF = new QueryTFIDF(this.queryIndexPath);
+        queryTFIDF.SetInput(this.queryString);
+        try {
+            queryResultTableView.getColumns().clear();
+            ObservableList list = queryTFIDF.SearchFiles();
+            TableColumn docIDCol = new TableColumn("Doc #");
+            docIDCol.setMinWidth(100);
+            docIDCol.setCellValueFactory(new PropertyValueFactory<DocumentScore, Integer>("docID"));
+            TableColumn docScoreCol = new TableColumn("Score");
+            docScoreCol.setMinWidth(100);
+            docScoreCol.setCellValueFactory(new PropertyValueFactory<DocumentScore, Double>("score"));
+            queryResultTableView.setItems(list);
+            queryResultTableView.getColumns().addAll(docIDCol, docScoreCol);
+        }catch (Exception exception){
+            showErrorAlert("Error", "An Exception Occured!", exception.getStackTrace().toString());
         }
     }
 }

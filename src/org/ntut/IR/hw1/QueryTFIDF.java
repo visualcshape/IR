@@ -1,5 +1,7 @@
 package org.ntut.IR.hw1;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.*;
@@ -10,6 +12,7 @@ import org.apache.lucene.util.BytesRef;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by leo880410 on 2016/4/19.
@@ -26,13 +29,15 @@ public class QueryTFIDF {
     private ArrayList<Double> queryWeight = new ArrayList<Double>();      //query在query中的權重
     private String OutputString="";
     private String pathSim = "querySim.txt";
-    public void QueryTFIDF(){
 
+    public QueryTFIDF(String indexPath){
+        this.dirPath = indexPath;
     }
     public void SetInput(String input){
         this.input=input.split(" ");
     }
-    public void SearchFiles()throws IOException {
+    public ObservableList<DocumentScore> SearchFiles()throws IOException {
+        List<DocumentScore> searchResult = new ArrayList<>();
         IndexReader indexReader = DirectoryReader.open(FSDirectory.open(Paths.get(dirPath)));
         IndexSearcher searcher = new IndexSearcher(indexReader);
         Analyzer analyzer = new StandardAnalyzer();
@@ -139,6 +144,8 @@ public class QueryTFIDF {
             System.out.println(queryDocument.get(i) +" "+ sim);
             sim = (int)(sim*100)/100.0;
             writeSim+=queryDocument.get(i) +" "+ sim+"\r\n";
+            DocumentScore documentScore = new DocumentScore(queryDocument.get(i), sim);
+            searchResult.add(documentScore);
         }
         try
         {
@@ -152,5 +159,7 @@ public class QueryTFIDF {
             e.printStackTrace();
             System.out.println("寫檔錯誤!!");
         }
+
+        return FXCollections.observableArrayList(searchResult);
     }
 }
