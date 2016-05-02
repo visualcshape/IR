@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,13 +112,8 @@ public class GUIController implements Initializable {
     }
 
     public void setInitialDirectory(String initialDirectory) {
-        StringBuilder builder = new StringBuilder(initialDirectory);
         //Check is directory or file
-        if(!initialDirectory.endsWith("/")){
-            int index = initialDirectory.lastIndexOf("/");
-            builder.setLength(index+1);
-        }
-        this.initialDirectory = builder.toString();
+        this.initialDirectory = FilenameUtils.getFullPath(initialDirectory);
     }
 
     private String initialDirectory = ".";

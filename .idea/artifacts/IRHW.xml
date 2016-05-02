@@ -10,6 +10,7 @@
         <element id="library" level="project" name="log4j-1.2-api-2.5-javadoc" />
         <element id="library" level="project" name="lucene5.5.0" />
         <element id="library" level="project" name="tika-app-1.12" />
+        <element id="library" level="project" name="jfxrt" />
       </element>
     </root>
   </artifact>
