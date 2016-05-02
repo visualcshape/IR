@@ -1,5 +1,6 @@
 package org.ntut.IR.hw1;
 
+import javafx.scene.control.ProgressBar;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexOptions;
 import org.apache.sis.internal.jdk7.StandardCharsets;
@@ -22,7 +23,7 @@ import java.util.StringTokenizer;
 public class WARCLoader {
     private static final String WARC_REGEX_START_STRING = "WARC/([\\d].[\\d][\\d]*)";
     private final int HTTP_OK_CODE = 200;
-    private ProgressHelper progressHelper;
+    private ProgressHelper progressHelper = null;
     private long lineCount;
     FieldType fieldType;
     private final String CRAM_CODE = "</body></html>";
@@ -53,15 +54,18 @@ public class WARCLoader {
         fieldType.setStored(true);
         fieldType.setStoreTermVectors(true);
         fieldType.setTokenized(true);
-        init();
+    }
 
+    public WARCLoader(String warcFileName, ProgressHelper helper){
+        this(warcFileName);
+        this.progressHelper = helper;
     }
 
     public ArrayList<Document> getDocuments(){
         return this.documents;
     }
 
-    private void init(){
+    public void start(){
         loadFile();
     }
 
@@ -126,7 +130,7 @@ public class WARCLoader {
 
     private void showProgress(int curLine) {
         if(isShowProgress){
-            progressHelper.printProgress(curLine, lineCount);
+            progressHelper.displayOnProgressBar(curLine, lineCount);
         }
     }
 

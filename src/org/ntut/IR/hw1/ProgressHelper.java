@@ -1,5 +1,7 @@
 package org.ntut.IR.hw1;
 
+import javafx.scene.control.ProgressBar;
+
 /**
  * Created by VodalokLab on 2016/4/1.
  */
@@ -14,6 +16,16 @@ public class ProgressHelper {
         this.completeString = "Load complete.";
     }
 
+    public ProgressHelper(String loadingString, String completeString, ProgressBar progressBar){
+        this(loadingString, completeString);
+        this.progressBar = progressBar;
+    }
+
+    public ProgressHelper(ProgressBar progressBar){
+        this();
+        this.progressBar = progressBar;
+    }
+
     private final int BAR_WIDTH = 5;//TAB_WIDTH*BAR_WIDTH should not greater than 100, and should be a  divisor of 100
     private final char[] BAR_STYLE = {'[',']'};
     private final int TAB_WIDTH = 4;
@@ -22,15 +34,26 @@ public class ProgressHelper {
     private final char PERCENT_SYMBOL = '%';
     private String loadingString;
     private String completeString;
+    private ProgressBar progressBar = null;
 
     public void printProgress(long currentLine,long totalLine) {
+        float percentage = calculatePercentage(currentLine, totalLine);
+
+        this.printProgressBar(percentage);
+    }
+
+    private float calculatePercentage(long currentLine, long totalLine) {
         if(currentLine > totalLine)
             throw new IllegalArgumentException("The currentLine should not greater than totalLine.");
         if(totalLine == 0)
             throw new ArithmeticException();
-        float percentage = (((float)currentLine / totalLine)*ONE_HUNDRED_PERCENT);
+        return (((float)currentLine / totalLine)*ONE_HUNDRED_PERCENT);
+    }
 
-        this.printProgressBar(percentage);
+    public void displayOnProgressBar(long currentLine, long totalLine){
+        float percentage = this.calculatePercentage(currentLine, totalLine);
+        percentage = percentage/ONE_HUNDRED_PERCENT;
+        progressBar.setProgress(percentage);
     }
 
     private void printProgressBar(float percentage){

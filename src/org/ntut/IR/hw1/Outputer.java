@@ -26,12 +26,18 @@ public class Outputer {
     private final long FREE_MEMORY_LOWER_BOUND_MB = 80;
     private boolean isFirstWriteDictionary = true;
     private boolean isFirstWritePostingList = true;
+    private ProgressHelper helper;
 
     public Outputer(String fieldToOutput, IndexReader indexReader, String outputPath){
         this.fieldNameToOutput = fieldToOutput;
         this.indexReader = indexReader;
         this.outputPath = outputPath;
+        this.helper = new ProgressHelper("Preparing Progress", "Data Preparation Complete");
+    }
 
+    public Outputer(String fieldNameToOutput, IndexReader indexReader, String outputPath, ProgressHelper helper){
+        this(fieldNameToOutput,indexReader,outputPath);
+        this.helper = helper;
     }
 
     public void setIsShowProgress(boolean show){
@@ -51,7 +57,6 @@ public class Outputer {
         Terms contentTerms = fields.terms(this.fieldNameToOutput);
         TermsEnum termsEnum = contentTerms.iterator();
         BytesRef aTerm;
-        ProgressHelper helper = new ProgressHelper("Preparing Progress", "Data Preparation Complete");
         long termProgress = 0;
         this.isPrepared = true;
 
@@ -90,7 +95,7 @@ public class Outputer {
             //Show Progress
             termProgress++;
             if(isShowProgress) {
-                helper.printProgress(termProgress, contentTerms.size());
+                helper.displayOnProgressBar(termProgress, contentTerms.size());
             }
 
         }

@@ -3,14 +3,15 @@ package org.ntut.IR.hw1;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.InputEvent;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.stage.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +61,27 @@ public class GUIController implements Initializable {
     private boolean isQueryButtonDisabled = true;
     private String dictionaryFileName = "Dictionary";
     private String postingListFileName = "PostingList";
+
+    public String getDictionaryFileName() {
+        return dictionaryFileName;
+    }
+
+    public String getPostingListFileName() {
+        return postingListFileName;
+    }
+
+    public String getWarcFilePath() {
+        return warcFilePath;
+    }
+
+    public String getOutputPath() {
+        return outputPath;
+    }
+
+    public boolean isOutputDictionaryAndPostingList() {
+        return isOutputDictionaryAndPostingList;
+    }
+
     private String warcFilePath = "";
     private String outputPath = "";
     private boolean isOutputDictionaryAndPostingList = true;
@@ -237,8 +259,35 @@ public class GUIController implements Initializable {
             !this.outputPath.isEmpty()));
     }
 
+    private final String INDEX_PROCESS_GUI_FXML_NAME = "IndexProcessing.fxml";
     @FXML
     private void handleStartIndexButtonAction(ActionEvent event){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(INDEX_PROCESS_GUI_FXML_NAME));
+        try {
+            Parent processingRoot = loader.load();
+            Stage processingStage = new Stage();
+            processingStage.initModality(Modality.APPLICATION_MODAL);
+            processingStage.setAlwaysOnTop(true);
+            processingStage.setTitle("Processing");
+            processingStage.setScene(new Scene(processingRoot));
+            processingStage.setResizable(false);
+            processingStage.initStyle(StageStyle.UNDECORATED);
 
+            processingStage.show();
+            IndexProcessingController controller = (IndexProcessingController) loader.getController();
+            controller.setSelfStage(processingStage);
+            controller.initData(this.getWarcFilePath(), this.getDictionaryFileName(), this.getPostingListFileName(), this.getOutputPath(), this.isOutputDictionaryAndPostingList());
+            Task task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    controller.start();
+                    return null;
+                }
+            };
+            new Thread(task).start();
+            //controller.start();
+        }catch (IOException exception){
+
+        }
     }
 }
